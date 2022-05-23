@@ -5,7 +5,6 @@ package core
 import (
 	"bytes"
 	"encoding/base64"
-	"errors"
 	"net/http"
 	"strings"
 	"unicode/utf8"
@@ -86,7 +85,7 @@ func (r *ProxyResponseWriterV2) GetProxyResponse() (events.APIGatewayV2HTTPRespo
 	r.notifyClosed()
 
 	if r.status == defaultStatusCode {
-		return events.APIGatewayV2HTTPResponse{}, errors.New("Status code not set on response")
+		r.status = 200
 	}
 
 	var output string

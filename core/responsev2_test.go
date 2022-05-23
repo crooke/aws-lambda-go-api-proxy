@@ -98,10 +98,10 @@ var _ = Describe("ResponseWriterV2 tests", func() {
 		emtpyResponse := NewProxyResponseWriterV2()
 		emtpyResponse.Header().Add("Content-Type", "application/json")
 
-		It("Refuses empty responses with default status code", func() {
-			_, err := emtpyResponse.GetProxyResponse()
-			Expect(err).ToNot(BeNil())
-			Expect("Status code not set on response").To(Equal(err.Error()))
+		It("Assumes 200 OK if status code not set", func() {
+			r, err := emtpyResponse.GetProxyResponse()
+			Expect(r.StatusCode).To(Equal(200))
+			Expect(err).To(BeNil())
 		})
 
 		simpleResponse := NewProxyResponseWriterV2()
